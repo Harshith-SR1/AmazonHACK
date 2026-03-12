@@ -1,0 +1,11 @@
+{
+  "pythonVersion": "3.13",
+  "venvPath": ".",
+  "venv": ".venv",
+  "include": ["."],
+  "extraPaths": [
+    ".",
+    "D:/solidfut/Project code files/Amz/project/backend"
+  ],
+  "reportMissingImports": true
+}

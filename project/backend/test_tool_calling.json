@@ -1,0 +1,24 @@
+{
+  "response_text": "Processing command: Search for kittens on YouTube",
+  "tool_invocations": [
+    {
+      "name": "search_youtube",
+      "args": {
+        "query": "Search for kittens on YouTube",
+        "device_id": "desktop-1"
+      }
+    }
+  ],
+  "execution_results": [
+    {
+      "tool": "search_youtube",
+      "query": "Search for kittens on YouTube",
+      "device_id": "desktop-1",
+      "engine": "desktop",
+      "action": "search_youtube",
+      "ok": true,
+      "mode": "browser",
+      "url": "https://www.youtube.com/results?search_query=Search+for+kittens+on+YouTube"
+    }
+  ]
+}

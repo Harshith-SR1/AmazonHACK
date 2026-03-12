@@ -1,0 +1,82 @@
+name: Automated Tests
+
+on:
+  push:
+    branches: ["main"]
+  pull_request:
+
+jobs:
+  backend-tests:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.13"
+      - name: Install backend deps
+        run: |
+          if [ -d "project/backend" ]; then
+            cd project/backend
+          elif [ -d "backend" ]; then
+            cd backend
+          else
+            echo "Backend directory not found"
+            exit 1
+          fi
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+      - name: Run backend tests
+        env:
+          SECURITY_REQUIRE_AUTH: "true"
+          SECURITY_API_KEYS: "dev-key"
+        run: |
+          if [ -d "project/backend" ]; then
+            cd project/backend
+          elif [ -d "backend" ]; then
+            cd backend
+          else
+            echo "Backend directory not found"
+            exit 1
+          fi
+          pytest -q
+
+  frontend-e2e:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+      - name: Install frontend deps
+        run: |
+          if [ -d "project/frontend" ]; then
+            cd project/frontend
+          elif [ -d "frontend" ]; then
+            cd frontend
+          else
+            echo "Frontend directory not found"
+            exit 1
+          fi
+          npm install
+      - name: Install Playwright browser
+        run: |
+          if [ -d "project/frontend" ]; then
+            cd project/frontend
+          elif [ -d "frontend" ]; then
+            cd frontend
+          else
+            echo "Frontend directory not found"
+            exit 1
+          fi
+          npx playwright install --with-deps chromium
+      - name: Run frontend tests
+        run: |
+          if [ -d "project/frontend" ]; then
+            cd project/frontend
+          elif [ -d "frontend" ]; then
+            cd frontend
+          else
+            echo "Frontend directory not found"
+            exit 1
+          fi
+          npm run test
